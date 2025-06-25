@@ -1,0 +1,129 @@
+/* Fuente y estilos base */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Encabezado */
+header {
+    background-color: #11488b;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Barra de navegación moderna */
+.barra-navegacion {
+    background-color: rgba(85, 105, 200, 0.6); /* Azul translúcido */
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 20px;
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de la lista */
+.barra-navegacion ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ítems del menú */
+.barra-navegacion ul li {
+    margin: 0 20px;
+}
+
+/* Enlaces de la barra */
+.barra-navegacion ul li a {
+    color: white !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.barra-navegacion ul li a:hover {
+    color: #e3dec5;
+}
+
+/* Estructura principal de texto y mapa juntos */
+.text-map {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+}
+
+.text {
+    flex: 1 1 50%;
+    min-width: 300px;
+}
+
+#map {
+    flex: 1 1 45%;
+    min-width: 300px;
+    height: 500px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Sección autor */
+.autor-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+.foto img {
+    max-width: 100%;
+    height: auto;
+    width: 200px;
+}
+
+/* Pie de página */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Formulario */
+#formulario {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"], input[type="submit"], input[type="date"] {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+    background-color: #11488b;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0d3566;
+}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Autor del Proyecto{% endblock %}
+
+{% block content %}
+<div class="autor-content">
+    <div class="text">
+        <h2>Sobre el Autor</h2>
+        <p><strong>Nombre:</strong> Ana Valentina Corrales Fonseca</p>
+        <p><strong>Edad:</strong> 20 años</p>
+        <p><strong>Fecha de nacimiento:</strong> 6 de marzo de 2005</p>
+        <p><strong>Lugar de nacimiento:</strong> Bogotá D.C., Colombia</p>
+        <p><strong>Formación:</strong> Estudiante de Ingeniería Catastral y Geodesia</p>
+        <p><strong>Universidad:</strong> Universidad Distrital Francisco José de Caldas</p>
+        <p><strong>Curso:</strong> Programación Orientada a Objetos</p>
+        <p><strong>Descripción:</strong> Estudiante comprometida con el análisis del espacio urbano...</p>
+    </div>
+    <div class="foto">
+        <img src="{{ url_for('static', filename='image/autor.jpg') }}" alt="Foto del Autor" />
+    </div>
+</div>
+{% endblock %}
