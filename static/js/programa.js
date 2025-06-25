@@ -8,7 +8,7 @@ if (mapContainer) {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    // Si estamos en el formulario interactivo
+    // Página: /mapa → permitir clic para registrar punto
     if (window.location.pathname.includes("mapa")) {
         map.on('click', function(e) {
             L.marker(e.latlng).addTo(map);
@@ -16,7 +16,7 @@ if (mapContainer) {
         });
     }
 
-    // Si estamos en la página "about", mostrar polígono
+    // Página: /about → mostrar polígono de Tibabuyes
     if (window.location.pathname.includes("about")) {
         var latlngs = [
             [4.7423251, -74.115069],
@@ -33,5 +33,13 @@ if (mapContainer) {
         }).addTo(map);
 
         map.fitBounds(polygon.getBounds());
+    }
+
+    // Página: / → descripción con marcador
+    if (window.location.pathname === "/" || window.location.pathname.includes("index")) {
+        L.marker([4.7423251, -74.115069])
+            .addTo(map)
+            .bindPopup('Zona de estudio: Tibabuyes II')
+            .openPopup();
     }
 }

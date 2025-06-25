@@ -127,3 +127,38 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #0d3566;
 }
+
+/*NUEVOS ESTILOS PARA ESPACIADO Y LEGIBILIDAD */
+
+/* Contenedor principal del contenido */
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 25px;
+}
+
+/* Estilo de los párrafos */
+main p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Encabezados del contenido principal */
+main h2 {
+    font-size: 26px;
+    color: #11488b;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #11488b;
+    padding-bottom: 5px;
+}
+/* Estilo del logo en el encabezado */
+header .logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 15px;
+}
+

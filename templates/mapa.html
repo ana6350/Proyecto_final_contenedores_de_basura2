@@ -4,18 +4,39 @@
 
 {% block content %}
 <h2>Registrar Punto en el Mapa</h2>
-<div id="map"></div>
-<div id="formulario">
-    <form action="" method="POST">
-        <div class="form-group">
-            <label for="id">Número de identificación</label>
-            <input class="form-control" type="text" name="id"/>
-            <label for="descripcion">Descripción del espacio</label>
-            <input class="form-control" type="text" name="descripcion"/>
-            <label for="estado">Estado</label>
-            <input class="form-control" type="text" name="estado"/>
-            <input type="submit" value="Agregar" class="btn-primary"/>
+
+<!-- Mapa -->
+<div id="map" class="mb-4"></div>
+
+<!-- Tarjeta en tonos azules -->
+<div class="container">
+  <div class="p-4 rounded shadow" style="background-color: #e8f1fc; border-left: 5px solid #11488b;">
+    <form method="POST">
+      <div class="mb-3 row">
+        <label for="id" class="form-label col-sm-3 fw-bold text-primary"> Número de identificación</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control border-primary" name="id" placeholder="Ej: 12345">
         </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="descripcion" class="form-label col-sm-3 fw-bold text-primary"> Descripción del espacio</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control border-primary" name="descripcion" placeholder="Ej: Contenedor desbordado">
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="estado" class="form-label col-sm-3 fw-bold text-primary"> Estado</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control border-primary" name="estado" placeholder="Ej: Bueno, Regular, Malo">
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary px-5">Agregar</button>
+      </div>
     </form>
+  </div>
 </div>
 {% endblock %}
