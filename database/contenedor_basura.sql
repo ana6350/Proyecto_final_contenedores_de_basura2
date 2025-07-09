@@ -5,7 +5,7 @@
 -- Dumped from database version 16.9
 -- Dumped by pg_dump version 16.9
 
--- Started on 2025-07-08 23:05:01
+-- Started on 2025-07-09 00:03:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -46,12 +46,12 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.basura (
     id integer NOT NULL,
-    localizacion point NOT NULL,
     fecha date NOT NULL,
     direccion character varying(100) NOT NULL,
     estado character varying(10) NOT NULL,
     observacion character varying(300) NOT NULL,
-    foto character varying(100) NOT NULL
+    foto character varying(100) NOT NULL,
+    localizacion public.geometry(Point,4326)
 );
 
 
@@ -63,7 +63,7 @@ ALTER TABLE public.basura OWNER TO postgres;
 -- Data for Name: basura; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.basura (id, localizacion, fecha, direccion, estado, observacion, foto) FROM stdin;
+COPY public.basura (id, fecha, direccion, estado, observacion, foto, localizacion) FROM stdin;
 \.
 
 
@@ -86,7 +86,7 @@ ALTER TABLE ONLY public.basura
     ADD CONSTRAINT basura_pkey PRIMARY KEY (id);
 
 
--- Completed on 2025-07-08 23:05:01
+-- Completed on 2025-07-09 00:03:17
 
 --
 -- PostgreSQL database dump complete
