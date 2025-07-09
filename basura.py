@@ -8,7 +8,7 @@ class Basura(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     localizacion = Column(Geometry(geometry_type='POINT', srid=4326), nullable=False)
     fecha = Column(Date, nullable=False)
-    ubicacion = Column(String(100), nullable=False)
+    direccion = Column(String(100), nullable=False)
     estado = Column(String(100), nullable=False)
     observacion = Column(String(300), nullable=False)
     foto = Column(String(100), nullable=False)

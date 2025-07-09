@@ -12,20 +12,24 @@
 <div class="container">
   <div class="p-4 rounded shadow" style="background-color: #e8f1fc; border-left: 5px solid #11488b;">
     <form method="POST" enctype="multipart/form-data">
+      
+      <!-- Fecha -->
       <div class="mb-3 row">
-        <label for="id" class="form-label col-sm-3 fw-bold text-primary">Número de identificación</label>
+        <label for="fecha" class="form-label col-sm-3 fw-bold text-primary">Fecha</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control border-primary" name="id" placeholder="Ej: 12345" required>
+          <input type="date" class="form-control border-primary" name="fecha" required>
         </div>
       </div>
 
+      <!-- Dirección -->
       <div class="mb-3 row">
-        <label for="descripcion" class="form-label col-sm-3 fw-bold text-primary">Descripción del espacio</label>
+        <label for="ubicacion" class="form-label col-sm-3 fw-bold text-primary">Dirección</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control border-primary" name="descripcion" placeholder="Ej: Contenedor desbordado" required>
+          <input type="text" class="form-control border-primary" name="ubicacion" placeholder="Ej: Carrera 129 con Calle 150" required>
         </div>
       </div>
 
+      <!-- Estado -->
       <div class="mb-3 row">
         <label for="estado" class="form-label col-sm-3 fw-bold text-primary">Estado</label>
         <div class="col-sm-9">
@@ -37,8 +41,17 @@
         </div>
       </div>
 
+      <!-- Observación -->
       <div class="mb-3 row">
-        <label for="foto" class="form-label col-sm-3 fw-bold text-primary">Foto del contenedor</label>
+        <label for="observacion" class="form-label col-sm-3 fw-bold text-primary">Observación</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control border-primary" name="observacion" placeholder="Ej: Contenedor lleno o desbordado" required>
+        </div>
+      </div>
+
+      <!-- Foto -->
+      <div class="mb-3 row">
+        <label for="foto" class="form-label col-sm-3 fw-bold text-primary">Foto</label>
         <div class="col-sm-9">
           <input type="file" class="form-control border-primary" name="foto" accept="image/*" required>
         </div>
@@ -51,3 +64,4 @@
   </div>
 </div>
 {% endblock %}
+

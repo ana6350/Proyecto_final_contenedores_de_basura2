@@ -1,16 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 from basura import db, Basura
 from api import api_blueprint
-from datetime import date
 from shapely.geometry import Point
 from geoalchemy2.shape import from_shape
 from werkzeug.utils import secure_filename
 import os
+from datetime import datetime
 
-# Configuración inicial
 app = Flask(__name__)
 
-# Configuración de base de datos PostgreSQL
+# Configuración de la base de datos PostgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:anacorrales@localhost:5432/contenedor_basura'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -19,16 +18,16 @@ UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-# Asegurar que la carpeta exista
+# Asegura que la carpeta exista
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Inicializar base de datos
+# Inicializa la base de datos
 db.init_app(app)
 
-# Registrar blueprint de la API
+# Registro del blueprint de la API
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
-# Función para validar extensiones de archivo
+# Función para validar extensión
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -37,50 +36,54 @@ def allowed_file(filename):
 def index():
     return render_template("index.html")
 
-# Página sobre el proyecto
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-# Página del autor
 @app.route("/autor")
 def autor():
     return render_template("autor.html")
 
-# Página del mapa y formulario
 @app.route("/mapa", methods=["GET", "POST"])
 def mapa():
     if request.method == "POST":
-        id_ = request.form.get("id")
-        descripcion = request.form.get("descripcion")
-        estado = request.form.get("estado")
-        foto = request.files.get("foto")
+        try:
+            fecha_str = request.form.get("fecha")
+            ubicacion = request.form.get("ubicacion")
+            estado = request.form.get("estado")
+            observacion = request.form.get("observacion")
+            foto = request.files.get("foto")
 
-        filename = None
-        if foto and allowed_file(foto.filename):
-            filename = secure_filename(foto.filename)
-            foto.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # Parsear la fecha del formulario
+            fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
 
-        # Puedes ajustar esta ubicación si capturas los clics del mapa
-        punto = from_shape(Point(-74.115069, 4.7423251), srid=4326)
+            # Guardar imagen si es válida
+            filename = None
+            if foto and allowed_file(foto.filename):
+                filename = secure_filename(foto.filename)
+                foto.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        nueva = Basura(
-            id=int(id_),
-            localizacion=punto,
-            fecha=date.today(),
-            ubicacion=descripcion,
-            estado=estado,
-            observacion="Desde formulario web",
-            foto=filename if filename else "sin_foto.jpg"
-        )
+            # Punto por defecto (puedes mejorarlo luego con coordenadas del mapa)
+            punto = from_shape(Point(-74.115069, 4.7423251), srid=4326)
 
-        db.session.add(nueva)
-        db.session.commit()
+            nueva = Basura(
+                localizacion=punto,
+                fecha=fecha,
+                ubicacion=ubicacion,
+                estado=estado,
+                observacion=observacion,
+                foto=filename if filename else "sin_foto.jpg"
+            )
 
-        return redirect(url_for("mapa"))
+            db.session.add(nueva)
+            db.session.commit()
+
+            return redirect(url_for("mapa"))
+        
+        except Exception as e:
+            return f"Error al procesar el formulario: {str(e)}"
 
     return render_template("mapa.html")
 
-# Ejecutar la aplicación
 if __name__ == "__main__":
     app.run(debug=True)
