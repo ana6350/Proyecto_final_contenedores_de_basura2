@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from basura import Basura
+from modelo import Contenedor
 from db import db
 from datetime import date
 from geoalchemy2.shape import from_shape
@@ -7,27 +7,28 @@ from shapely.geometry import Point
 
 api_blueprint = Blueprint("api", __name__)
 
-@api_blueprint.route("/nueva", methods=["POST"])
-def crear_basura():
+@api_blueprint.route("/nuevo", methods=["POST"])
+def crear_contenedor():
     data = request.get_json()
-    
+
     try:
         lat = float(data["lat"])
         lon = float(data["lon"])
-        ubicacion = data["ubicacion"]
+        direccion = data["direccion"]
         estado = data["estado"]
         observacion = data["observacion"]
 
         punto = from_shape(Point(lon, lat), srid=4326)
 
-        nueva = Basura(
+        nuevo = Contenedor(
             localizacion=punto,
             fecha=date.today(),
-            ubicacion=ubicacion,
+            direccion=direccion,
             estado=estado,
-            observacion=observacion
+            observacion=observacion,
+            foto="sin_foto.jpg"
         )
-        db.session.add(nueva)
+        db.session.add(nuevo)
         db.session.commit()
 
         return jsonify({"mensaje": "Registro creado exitosamente"}), 201
@@ -37,16 +38,16 @@ def crear_basura():
 
 @api_blueprint.route("/todos", methods=["GET"])
 def obtener_todos():
-    registros = Basura.query.all()
+    registros = Contenedor.query.all()
     resultado = []
     for r in registros:
-        punto = r.localizacion.desc  # formato WKT
         resultado.append({
             "id": r.id,
             "fecha": r.fecha.isoformat(),
-            "ubicacion": r.ubicacion,
+            "direccion": r.direccion,
             "estado": r.estado,
             "observacion": r.observacion,
-            "localizacion": punto
+            "foto": r.foto,
+            "localizacion": r.localizacion.desc # WKT (Well-Known Text)
         })
     return jsonify(resultado)

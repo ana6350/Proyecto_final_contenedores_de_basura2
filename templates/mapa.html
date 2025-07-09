@@ -6,7 +6,7 @@
 <h2>Registrar Punto en el Mapa</h2>
 
 <!-- Mapa -->
-<div id="map" class="mb-4"></div>
+<div id="map" class="mb-4" style="height: 400px;"></div>
 
 <!-- Tarjeta en tonos azules -->
 <div class="container">
@@ -63,4 +63,20 @@
     </form>
   </div>
 </div>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([4.7423251, -74.115069], 15);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  L.marker([4.7423251, -74.115069]).addTo(map)
+    .bindPopup('Punto por defecto')
+    .openPopup();
+</script>
 {% endblock %}

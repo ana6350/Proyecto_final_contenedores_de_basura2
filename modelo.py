@@ -2,11 +2,11 @@ from db import db
 from sqlalchemy import Column, Integer, String, Date
 from geoalchemy2 import Geometry
 
-class Basura(db.Model):
-    __tablename__ = 'basura'
+class Contenedor(db.Model):
+    __tablename__ = 'contenedor'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    localizacion = Column(Geometry(geometry_type='POINT', srid=4326), nullable=False)
+    localizacion = Column(Geometry(geometry_type='POINT', srid=4326), nullable=True)
     fecha = Column(Date, nullable=False)
     direccion = Column(String(100), nullable=False)
     estado = Column(String(100), nullable=False)
@@ -14,4 +14,5 @@ class Basura(db.Model):
     foto = Column(String(100), nullable=False)
 
     def __repr__(self):
-        return f"<Basura id={self.id} ubicacion={self.ubicacion} estado={self.estado}>"
+        return f"<Contenedor id={self.id} direccion={self.direccion} estado={self.estado}>"
+

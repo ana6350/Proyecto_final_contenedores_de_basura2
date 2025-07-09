@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
-from basura import db, Basura
+from db import db
 from api import api_blueprint
 from shapely.geometry import Point
 from geoalchemy2.shape import from_shape
 from werkzeug.utils import secure_filename
+from modelo import Contenedor  # modelo actualizado
 import os
 from datetime import datetime
 
@@ -64,10 +65,10 @@ def mapa():
                 filename = secure_filename(foto.filename)
                 foto.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            # Coordenadas por defecto (puedes capturar del mapa más adelante)
+            # Coordenadas por defecto (puedes reemplazarlas luego con datos reales del mapa)
             punto = from_shape(Point(-74.115069, 4.7423251), srid=4326)
 
-            nueva = Basura(
+            nuevo_contenedor = Contenedor(
                 localizacion=punto,
                 fecha=fecha,
                 direccion=direccion,
@@ -76,7 +77,7 @@ def mapa():
                 foto=filename if filename else "sin_foto.jpg"
             )
 
-            db.session.add(nueva)
+            db.session.add(nuevo_contenedor)
             db.session.commit()
 
             return redirect(url_for("mapa"))
