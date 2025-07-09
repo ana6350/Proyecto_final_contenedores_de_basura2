@@ -19,12 +19,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# Inicializar base de datos y registrar API
 db.init_app(app)
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
+# Validación de archivos permitidos
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# Rutas principales
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -46,19 +49,22 @@ def mapa():
             estado = request.form.get("estado")
             observacion = request.form.get("observacion")
             foto = request.files.get("foto")
+            lat = float(request.form.get("lat"))
+            lon = float(request.form.get("lon"))
 
+            # Parsear fecha
             fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
 
+            # Procesar imagen
             filename = None
             if foto and allowed_file(foto.filename):
                 filename = secure_filename(foto.filename)
                 foto.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            lat = float(request.form.get("lat"))
-            lon = float(request.form.get("lon"))
+            # Crear punto geográfico
             punto = from_shape(Point(lon, lat), srid=4326)
-   
 
+            # Crear registro
             nuevo = Contenedor(
                 localizacion=punto,
                 fecha=fecha,
@@ -70,13 +76,14 @@ def mapa():
 
             db.session.add(nuevo)
             db.session.commit()
-           
-           return redirect(url_for("mapa", exito=1))
+
+            # ✅ Redirecciona con mensaje de éxito
+            return redirect(url_for("mapa", exito=1))
 
         except Exception as e:
             return f"Error al procesar el formulario: {str(e)}"
 
     return render_template("mapa.html")
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
