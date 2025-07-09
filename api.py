@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from modelo import Contenedor
+from basura import Contenedor
 from db import db
 from datetime import date
 from geoalchemy2.shape import from_shape
@@ -7,10 +7,10 @@ from shapely.geometry import Point
 
 api_blueprint = Blueprint("api", __name__)
 
-@api_blueprint.route("/nuevo", methods=["POST"])
+@api_blueprint.route("/nueva", methods=["POST"])
 def crear_contenedor():
     data = request.get_json()
-
+    
     try:
         lat = float(data["lat"])
         lon = float(data["lon"])
@@ -48,6 +48,6 @@ def obtener_todos():
             "estado": r.estado,
             "observacion": r.observacion,
             "foto": r.foto,
-            "localizacion": r.localizacion.desc # WKT (Well-Known Text)
+            "localizacion": r.localizacion.desc  # WKT
         })
     return jsonify(resultado)
