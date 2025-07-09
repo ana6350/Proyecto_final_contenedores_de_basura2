@@ -27,7 +27,7 @@ db.init_app(app)
 # Registro del blueprint de la API
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
-# Función para validar extensión
+# Función para validar extensión de imagen
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -44,32 +44,33 @@ def about():
 def autor():
     return render_template("autor.html")
 
+# Página del formulario con mapa
 @app.route("/mapa", methods=["GET", "POST"])
 def mapa():
     if request.method == "POST":
         try:
             fecha_str = request.form.get("fecha")
-            ubicacion = request.form.get("ubicacion")
+            direccion = request.form.get("direccion")
             estado = request.form.get("estado")
             observacion = request.form.get("observacion")
             foto = request.files.get("foto")
 
-            # Parsear la fecha del formulario
+            # Parsear la fecha
             fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
 
-            # Guardar imagen si es válida
+            # Guardar imagen
             filename = None
             if foto and allowed_file(foto.filename):
                 filename = secure_filename(foto.filename)
                 foto.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            # Punto por defecto (puedes mejorarlo luego con coordenadas del mapa)
+            # Coordenadas por defecto (puedes capturar del mapa más adelante)
             punto = from_shape(Point(-74.115069, 4.7423251), srid=4326)
 
             nueva = Basura(
                 localizacion=punto,
                 fecha=fecha,
-                ubicacion=ubicacion,
+                direccion=direccion,
                 estado=estado,
                 observacion=observacion,
                 foto=filename if filename else "sin_foto.jpg"
@@ -79,7 +80,7 @@ def mapa():
             db.session.commit()
 
             return redirect(url_for("mapa"))
-        
+
         except Exception as e:
             return f"Error al procesar el formulario: {str(e)}"
 
