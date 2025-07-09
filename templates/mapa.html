@@ -91,10 +91,18 @@
       marker = L.marker([lat, lon]).addTo(map);
     }
 
-    // Asignar a los inputs ocultos
     document.getElementById('lat').value = lat;
     document.getElementById('lon').value = lon;
   });
+
+  // Mostrar mensaje de agradecimiento si ?exito=1 está en la URL
+  window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('exito') === '1') {
+      alert("Gracias por registrar el estado del contenedor. Tu aporte ayuda a mejorar el entorno.");
+    }
+  };
 </script>
 {% endblock %}
+
 

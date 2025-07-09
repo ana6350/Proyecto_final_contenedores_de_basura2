@@ -70,8 +70,8 @@ def mapa():
 
             db.session.add(nuevo)
             db.session.commit()
-
-            return redirect(url_for("mapa"))
+           
+           return redirect(url_for("mapa", exito=1))
 
         except Exception as e:
             return f"Error al procesar el formulario: {str(e)}"
