@@ -11,6 +11,7 @@ class Basura(db.Model):
     ubicacion = Column(String(100), nullable=False)
     estado = Column(String(100), nullable=False)
     observacion = Column(String(300), nullable=False)
+    foto = Column(String(100), nullable=False)
 
     def __repr__(self):
         return f"<Basura id={self.id} ubicacion={self.ubicacion} estado={self.estado}>"

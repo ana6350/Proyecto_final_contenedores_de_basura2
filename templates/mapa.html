@@ -11,25 +11,36 @@
 <!-- Tarjeta en tonos azules -->
 <div class="container">
   <div class="p-4 rounded shadow" style="background-color: #e8f1fc; border-left: 5px solid #11488b;">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <div class="mb-3 row">
-        <label for="id" class="form-label col-sm-3 fw-bold text-primary"> Número de identificación</label>
+        <label for="id" class="form-label col-sm-3 fw-bold text-primary">Número de identificación</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control border-primary" name="id" placeholder="Ej: 12345">
+          <input type="text" class="form-control border-primary" name="id" placeholder="Ej: 12345" required>
         </div>
       </div>
 
       <div class="mb-3 row">
-        <label for="descripcion" class="form-label col-sm-3 fw-bold text-primary"> Descripción del espacio</label>
+        <label for="descripcion" class="form-label col-sm-3 fw-bold text-primary">Descripción del espacio</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control border-primary" name="descripcion" placeholder="Ej: Contenedor desbordado">
+          <input type="text" class="form-control border-primary" name="descripcion" placeholder="Ej: Contenedor desbordado" required>
         </div>
       </div>
 
       <div class="mb-3 row">
-        <label for="estado" class="form-label col-sm-3 fw-bold text-primary"> Estado</label>
+        <label for="estado" class="form-label col-sm-3 fw-bold text-primary">Estado</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control border-primary" name="estado" placeholder="Ej: Bueno, Regular, Malo">
+          <select class="form-select border-primary" name="estado" required>
+            <option value="Bueno">Bueno</option>
+            <option value="Regular">Regular</option>
+            <option value="Malo">Malo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="foto" class="form-label col-sm-3 fw-bold text-primary">Foto del contenedor</label>
+        <div class="col-sm-9">
+          <input type="file" class="form-control border-primary" name="foto" accept="image/*" required>
         </div>
       </div>
 
